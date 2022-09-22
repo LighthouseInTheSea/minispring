@@ -4,11 +4,13 @@ import cn.hutool.core.bean.BeanUtil;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.PropertyValue;
 import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.config.BeanReference;
 
 /**
  * @since 2
  * @since 3 添加实例化策略相关内容
  * @since 4 添加为bean填充属性
+ * @since 5 为bean填充bean
  */
 public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory {
 
@@ -54,7 +56,11 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
             for (PropertyValue propertyValue : beanDefinition.getPropertyValues().getPropertyValues()) {
                 String name = propertyValue.getName();
                 Object value = propertyValue.getValue();
-
+                if (value instanceof BeanReference) {
+                    //beanA依赖于beanB,先实例化beanB
+                    BeanReference beanReference = (BeanReference) value;
+                    value = getBean(beanReference.getBeanName());
+                }
                 //通过反射设置属性
                 BeanUtil.setFieldValue(bean,name,value);
             }
