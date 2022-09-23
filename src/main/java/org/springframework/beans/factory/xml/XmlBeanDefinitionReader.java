@@ -90,7 +90,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 
                     for (int j = 0; j < bean.getChildNodes().getLength(); j++) {
                         if (bean.getChildNodes().item(j) instanceof Element) {
-                            if (StrUtil.equals(PROPERTY_ELEMENT,((Element)childNodes.item(i)).getNodeName())) {
+                            if (StrUtil.equals(PROPERTY_ELEMENT,((Element)bean.getChildNodes().item(j)).getNodeName())) {
                                 // 解析property标签
                                 Element property = (Element) bean.getChildNodes().item(j);
                                 String nameAttribute =  property.getAttribute(NAME_ATTRIBUTE);
