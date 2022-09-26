@@ -31,5 +31,6 @@ public interface ConfigurableListableBeanFactory extends ListableBeanFactory, Au
      * @since8
      * @param beanPostProcessor
      */
+    @Override
     void addBeanPostProcessor(BeanPostProcessor beanPostProcessor);
 }
